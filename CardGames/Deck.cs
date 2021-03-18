@@ -18,7 +18,16 @@ namespace CardGames
 
         public void Shuffle()
         {
-            //Fisher Yates Shuffle
+            Random rng = new Random();
+            int n = cards.Count;
+            while (n > 1)
+            {
+                n--;
+                int x = rng.Next(n + 1);
+                Card value = cards[x];
+                cards[x] = cards[n];
+                cards[n] = value;
+            }
         }
 
         private List<Card> GenerateCards()
