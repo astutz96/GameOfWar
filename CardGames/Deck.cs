@@ -16,8 +16,22 @@ namespace CardGames
             return cards;
         }
 
+        public Card DrawTopCard()
+        {
+            Card topCard;
+            topCard = cards[0];
+            cards.RemoveAt(0);
+            return topCard;
+        }
+
+        public void AddCardToBottomOfDeck(Card card)
+        {
+            cards.Add(card);
+        }
+
         public void Shuffle()
         {
+            //FisherYatesShuffle
             Random rng = new Random();
             int n = cards.Count;
             while (n > 1)
