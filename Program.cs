@@ -1,5 +1,6 @@
 ﻿using System;
 using CardGames;
+using System.Collections.Generic;
 
 namespace GameOfWar
 {
@@ -7,16 +8,13 @@ namespace GameOfWar
     {
         static void Main(string[] args)
         {
+            List<Card> gameDeck = GenerateDeck();
+            Shuffle(gameDeck);
 
-            // Deck player1Deck = new Deck();
-            // Deck player2Deck = new Deck();
-            // int p1RoundWinCount = 0;
-            // int p2RoundWinCount = 0;
+            List<Card> p1Hand = gameDeck.GetRange(0, (gameDeck.Count / 2) - 1);
+            List<Card> p2Hand = gameDeck.GetRange(gameDeck.Count / 2, gameDeck.Count / 2);
 
-            // player1Deck.Shuffle();
-            // player2Deck.Shuffle();
-            // player2Deck.Shuffle();
-            // player2Deck.Shuffle();
+            Console.WriteLine("hi");
 
             // while (!(player1Deck.GetCards().Count.Equals(5) || player2Deck.GetCards().Count.Equals(5)))
             // {
@@ -59,7 +57,21 @@ namespace GameOfWar
             // }
         }
 
-        public string GetRank(Card card)
+        private static List<Card> GenerateDeck()
+        {
+            List<Card> myCards = new List<Card>();
+
+            for (int i = 2; i < 15; i++)
+            {
+                myCards.Add(new Card(Suit.Clubs, i));
+                myCards.Add(new Card(Suit.Diamonds, i));
+                myCards.Add(new Card(Suit.Hearts, i));
+                myCards.Add(new Card(Suit.Spades, i));
+            }
+            return myCards;
+        }
+
+        private static string GetRank(Card card)
         {
             if (card.RankValue.Equals(11))
             {
@@ -83,5 +95,27 @@ namespace GameOfWar
             }
         }
 
+        private static Card DrawTopCard(List<Card> cards)
+        {
+            Card topCard;
+            topCard = cards[0];
+            cards.RemoveAt(0);
+            return topCard;
+        }
+
+        private static void Shuffle(List<Card> cards)
+        {
+            //FisherYatesShuffle
+            Random rng = new Random();
+            int n = cards.Count;
+            while (n > 1)
+            {
+                n--;
+                int x = rng.Next(n + 1);
+                Card value = cards[x];
+                cards[x] = cards[n];
+                cards[n] = value;
+            }
+        }
     }
 }
