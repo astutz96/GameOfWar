@@ -4,57 +4,90 @@ using System.Collections.Generic;
 
 namespace GameOfWar
 {
-    class PlayGameOfWar
+    class PlayGameOfWarRunner
     {
+        private static DeckInteractor DeckInteractor;
         static void Main(string[] args)
         {
-            int p1RoundsWon = 0;
-            int p2RoundsWon = 0;
-            DeckInteractor deckInteractor = new DeckInteractor();
-            List<Card> gameDeck = deckInteractor.GenerateDeck();
-            deckInteractor.Shuffle(gameDeck);
+            DeckInteractor = new DeckInteractor();
+            List<Card> gameDeck = DeckInteractor.GenerateDeck();
+            DeckInteractor.Shuffle(gameDeck);
 
-            List<Card> p1Hand = gameDeck.GetRange(0, (gameDeck.Count / 2) - 1);
-            List<Card> p2Hand = gameDeck.GetRange(gameDeck.Count / 2, gameDeck.Count / 2);
+            GameOfWar gameState = new GameOfWar();
 
-            while (!(p1Hand.Count.Equals(0) || p2Hand.Count.Equals(0)))
+            gameState.P1Hand = gameDeck.GetRange(0, (gameDeck.Count / 2));
+            gameState.P2Hand = gameDeck.GetRange(gameDeck.Count / 2, gameDeck.Count / 2);
+
+            while (!(gameState.P1Hand.Count.Equals(0) || gameState.P2Hand.Count.Equals(0)))
             {
-                Card p1Card = deckInteractor.DrawTopCard(p1Hand);
-                Card p2Card = deckInteractor.DrawTopCard(p2Hand);
-                Console.Write(deckInteractor.GetRank(p1Card) + " of " + Enum.GetName(typeof(Suit), p1Card.Suit));
+
+                gameState.P1CardInPlay = DeckInteractor.DrawTopCard(gameState.P1Hand);
+                gameState.P2CardInPlay = DeckInteractor.DrawTopCard(gameState.P2Hand);
+                gameState.WinnersPot = new List<Card>();
+                Console.Write(DeckInteractor.GetRank(gameState.P1CardInPlay) + " of " + gameState.P1CardInPlay.Suit.ToString());
                 Console.Write(" VS ");
-                Console.Write(deckInteractor.GetRank(p2Card) + " of " + Enum.GetName(typeof(Suit), p2Card.Suit));
-                if (p1Card.RankValue > p2Card.RankValue)
-                {
-                    p1RoundsWon++;
-                    Console.Write(" Player 1 wins round!");
-                    p1Hand.Add(p1Card);
-                    p1Hand.Add(p2Card);
-                }
-                else if (p1Card.RankValue < p2Card.RankValue)
-                {
-                    p2RoundsWon++;
-                    Console.Write(" Player 2 wins round!");
-                    p2Hand.Add(p1Card);
-                    p2Hand.Add(p2Card);
-                }
-                else
-                {
-                    p1RoundsWon++;
-                    Console.Write("--- TIE ---");
-                    p1Hand.Add(p1Card);
-                    p1Hand.Add(p2Card);
-                }
-                Console.WriteLine("---");
+                Console.Write(DeckInteractor.GetRank(gameState.P2CardInPlay) + " of " + gameState.P2CardInPlay.Suit.ToString());
+                PlayRound(gameState);
+                Console.WriteLine("");
             }
 
-            if (p1Hand.Count.Equals(0))
+            if (gameState.P1Hand.Count.Equals(0))
             {
-                Console.WriteLine("layer 2 wins! Total rounds won: " + p2RoundsWon.ToString());
+                Console.WriteLine("Player 2 wins game!");
             }
             else
             {
-                Console.WriteLine("Player 1 wins! Total round won: " + p1RoundsWon.ToString());
+                Console.WriteLine("Player 1 wins game!");
+            }
+        }
+
+        public static void PlayRound(GameOfWar game)
+        {
+            string winner = FindWinner(game.P1CardInPlay, game.P2CardInPlay);
+            if (winner == "P1")
+            {
+                Console.Write(" Player 1 Wins!");
+                game.WinnersPot.Add(game.P1CardInPlay);
+                game.WinnersPot.Add(game.P2CardInPlay);
+                game.P1Hand.AddRange(game.WinnersPot);
+            }
+            else if (winner == "P2")
+            {
+                Console.Write(" Player 2 Wins!");
+                game.WinnersPot.Add(game.P1CardInPlay);
+                game.WinnersPot.Add(game.P2CardInPlay);
+                game.P2Hand.AddRange(game.WinnersPot);
+            }
+            else
+            {
+                Console.Write(" ITS A TIE!!!");
+                game.WinnersPot.Add(game.P1CardInPlay);
+                game.WinnersPot.Add(game.P2CardInPlay);
+                for (int i = 0; i < 3; i++)
+                {
+                    game.WinnersPot.Add(DeckInteractor.DrawTopCard(game.P1Hand));
+                    game.WinnersPot.Add(DeckInteractor.DrawTopCard(game.P2Hand));
+                }
+                game.P1CardInPlay = DeckInteractor.DrawTopCard(game.P1Hand);
+                game.P2CardInPlay = DeckInteractor.DrawTopCard(game.P2Hand);
+                PlayRound(game);
+            }
+
+        }
+
+        public static string FindWinner(Card p1Card, Card p2Card)
+        {
+            if (p1Card.RankValue > p2Card.RankValue)
+            {
+                return "P1";
+            }
+            else if (p2Card.RankValue > p1Card.RankValue)
+            {
+                return "P2";
+            }
+            else
+            {
+                return "Tie";
             }
         }
     }

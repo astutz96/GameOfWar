@@ -37,11 +37,6 @@ namespace CardGames
             this.rankValue = rankValue;
         }
 
-        //     public string GetSuit()
-        //     {
-        //         return Enum.GetName(typeof(Suit), this.suit);
-        //     }
-
     }
 
 }
