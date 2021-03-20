@@ -8,6 +8,8 @@ namespace GameOfWar
     {
         static void Main(string[] args)
         {
+            int p1RoundsWon = 0;
+            int p2RoundsWon = 0;
             List<Card> gameDeck = GenerateDeck();
             Shuffle(gameDeck);
 
@@ -16,45 +18,45 @@ namespace GameOfWar
 
             Console.WriteLine("hi");
 
-            // while (!(player1Deck.GetCards().Count.Equals(5) || player2Deck.GetCards().Count.Equals(5)))
-            // {
-            //     Card p1Card = player1Deck.DrawTopCard();
-            //     Card p2Card = player2Deck.DrawTopCard();
-            //     Console.Write(p1Card.GetRank() + " of " + p1Card.GetSuit());
-            //     Console.Write(" VS ");
-            //     Console.Write(p2Card.GetRank() + " of " + p2Card.GetSuit());
-            //     if (p1Card.GetRankValue() > p2Card.GetRankValue())
-            //     {
-            //         p1RoundWinCount++;
-            //         Console.Write(" Player 1 wins round!");
-            //         player1Deck.AddCardToBottomOfDeck(p1Card);
-            //         player1Deck.AddCardToBottomOfDeck(p2Card);
-            //     }
-            //     else if (p1Card.GetRankValue() < p2Card.GetRankValue())
-            //     {
-            //         p2RoundWinCount++;
-            //         Console.Write(" Player 2 wins round!");
-            //         player2Deck.AddCardToBottomOfDeck(p1Card);
-            //         player2Deck.AddCardToBottomOfDeck(p2Card);
-            //     }
-            //     else
-            //     {
-            //         p1RoundWinCount++;
-            //         Console.Write("--- TIE ---");
-            //         player1Deck.AddCardToBottomOfDeck(p1Card);
-            //         player1Deck.AddCardToBottomOfDeck(p2Card);
-            //     }
-            //     Console.WriteLine("---");
-            // }
+            while (!(p1Hand.Count.Equals(0) || p2Hand.Count.Equals(0)))
+            {
+                Card p1Card = DrawTopCard(p1Hand);
+                Card p2Card = DrawTopCard(p2Hand);
+                Console.Write(GetRank(p1Card) + " of " + Enum.GetName(typeof(Suit), p1Card.Suit));
+                Console.Write(" VS ");
+                Console.Write(GetRank(p2Card) + " of " + Enum.GetName(typeof(Suit), p2Card.Suit));
+                if (p1Card.RankValue > p2Card.RankValue)
+                {
+                    p1RoundsWon++;
+                    Console.Write(" Player 1 wins round!");
+                    p1Hand.Add(p1Card);
+                    p1Hand.Add(p2Card);
+                }
+                else if (p1Card.RankValue < p2Card.RankValue)
+                {
+                    p2RoundsWon++;
+                    Console.Write(" Player 2 wins round!");
+                    p2Hand.Add(p1Card);
+                    p2Hand.Add(p2Card);
+                }
+                else
+                {
+                    p1RoundsWon++;
+                    Console.Write("--- TIE ---");
+                    p1Hand.Add(p1Card);
+                    p1Hand.Add(p2Card);
+                }
+                Console.WriteLine("---");
+            }
 
-            // if (player1Deck.GetCards().Count.Equals(0))
-            // {
-            //     Console.WriteLine("layer 2 wins! Total rounds won: " + p1RoundWinCount.ToString());
-            // }
-            // else
-            // {
-            //     Console.WriteLine("Player 1 wins! Total round won: " + p2RoundWinCount.ToString());
-            // }
+            if (p1Hand.Count.Equals(0))
+            {
+                Console.WriteLine("layer 2 wins! Total rounds won: " + p2RoundsWon.ToString());
+            }
+            else
+            {
+                Console.WriteLine("Player 1 wins! Total round won: " + p1RoundsWon.ToString());
+            }
         }
 
         private static List<Card> GenerateDeck()

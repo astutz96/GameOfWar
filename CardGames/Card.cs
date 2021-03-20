@@ -30,7 +30,7 @@ namespace CardGames
         {
             if (rankValue < 2 || rankValue > 14)
             {
-                throw new ArgumentException("Invalid Rank Provided: " + rank.ToString());
+                throw new ArgumentException("Invalid Rank Provided: " + rankValue.ToString());
             };
 
             this.suit = suit;
@@ -42,5 +42,6 @@ namespace CardGames
         //         return Enum.GetName(typeof(Suit), this.suit);
         //     }
 
-        // }
     }
+
+}
