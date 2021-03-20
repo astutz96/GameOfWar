@@ -37,6 +37,11 @@ namespace CardGames
             this.rankValue = rankValue;
         }
 
+        public String Print()
+        {
+            return rankValue.ToString() + " of " + suit.ToString();
+        }
+
     }
 
 }

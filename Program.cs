@@ -24,9 +24,9 @@ namespace GameOfWar
                 gameState.P1CardInPlay = DeckInteractor.DrawTopCard(gameState.P1Hand);
                 gameState.P2CardInPlay = DeckInteractor.DrawTopCard(gameState.P2Hand);
                 gameState.WinnersPot = new List<Card>();
-                Console.Write(DeckInteractor.GetRank(gameState.P1CardInPlay) + " of " + gameState.P1CardInPlay.Suit.ToString());
+                Console.Write(gameState.P1CardInPlay.Print());
                 Console.Write(" VS ");
-                Console.Write(DeckInteractor.GetRank(gameState.P2CardInPlay) + " of " + gameState.P2CardInPlay.Suit.ToString());
+                Console.Write(gameState.P2CardInPlay.Print());
                 PlayRound(gameState);
                 Console.WriteLine("");
             }
