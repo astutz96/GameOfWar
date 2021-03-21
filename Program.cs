@@ -60,7 +60,7 @@ namespace GameOfWar
             }
             else
             {
-                Console.Write(" ITS A TIE!!!");
+                Console.WriteLine(" ITS A TIE!!!");
                 game.WinnersPot.Add(game.P1CardInPlay);
                 game.WinnersPot.Add(game.P2CardInPlay);
                 for (int i = 0; i < 3; i++)

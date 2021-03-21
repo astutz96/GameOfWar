@@ -11,19 +11,24 @@ namespace CardGames
     public class Card
     {
 
-        private Suit suit;
-        private int rankValue;
+        private Suit _suit;
+        private int _rankValue;
 
         public int RankValue
         {
-            get { return rankValue; }
-            set { rankValue = value; }
+            get { return _rankValue; }
+            set { _rankValue = value; }
         }
 
         public Suit Suit
         {
-            get { return suit; }
-            set { suit = value; }
+            get { return _suit; }
+            set { _suit = value; }
+        }
+
+        public string Rank
+        {
+            get {return GetRank();}
         }
 
         public Card(Suit suit, int rankValue)
@@ -33,13 +38,37 @@ namespace CardGames
                 throw new ArgumentException("Invalid Rank Provided: " + rankValue.ToString());
             };
 
-            this.suit = suit;
-            this.rankValue = rankValue;
+            this._suit = suit;
+            this._rankValue = rankValue;
         }
 
         public String Print()
         {
-            return rankValue.ToString() + " of " + suit.ToString();
+            return Rank + " of " + _suit.ToString();
+        }
+
+        public string GetRank()
+        {
+            if (this.RankValue.Equals(11))
+            {
+                return "Jack";
+            }
+            else if (this.RankValue.Equals(12))
+            {
+                return "Queen";
+            }
+            else if (this.RankValue.Equals(13))
+            {
+                return "King";
+            }
+            else if (this.RankValue.Equals(14))
+            {
+                return "Ace";
+            }
+            else
+            {
+                return this.RankValue.ToString();
+            }
         }
 
     }

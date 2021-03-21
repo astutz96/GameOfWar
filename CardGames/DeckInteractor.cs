@@ -18,29 +18,6 @@ namespace CardGames
             }
             return myCards;
         }
-        public string GetRank(Card card)
-        {
-            if (card.RankValue.Equals(11))
-            {
-                return "Jack";
-            }
-            else if (card.RankValue.Equals(12))
-            {
-                return "Queen";
-            }
-            else if (card.RankValue.Equals(13))
-            {
-                return "King";
-            }
-            else if (card.RankValue.Equals(14))
-            {
-                return "Ace";
-            }
-            else
-            {
-                return card.RankValue.ToString();
-            }
-        }
 
         public Card DrawTopCard(List<Card> cards)
         {
