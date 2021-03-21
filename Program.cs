@@ -60,19 +60,25 @@ namespace GameOfWar
             }
             else
             {
+                int tieCounter = 0;
                 Console.WriteLine(" ITS A TIE!!!");
                 game.WinnersPot.Add(game.P1CardInPlay);
                 game.WinnersPot.Add(game.P2CardInPlay);
-                for (int i = 0; i < 3; i++)
-                {
+
+                while(!EitherPlayerOnlyHasTwoCardsLeft(game) & tieCounter < 3){
                     game.WinnersPot.Add(DeckInteractor.DrawTopCard(game.P1Hand));
                     game.WinnersPot.Add(DeckInteractor.DrawTopCard(game.P2Hand));
+                    tieCounter++;
                 }
                 game.P1CardInPlay = DeckInteractor.DrawTopCard(game.P1Hand);
                 game.P2CardInPlay = DeckInteractor.DrawTopCard(game.P2Hand);
                 PlayRound(game);
             }
 
+        }
+
+        private static bool EitherPlayerOnlyHasTwoCardsLeft(GameOfWar game){
+            return = ((game.P1Hand.Count < 2) || (game.P2Hand.Count < 2));
         }
 
         public static string FindWinner(Card p1Card, Card p2Card)
