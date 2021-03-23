@@ -7,12 +7,12 @@ namespace GameOfWar
 {
     class PlayGameOfWarRunner
     {
-        private static DeckInteractor DeckInteractor;
+        private static DeckInteractor deckInteractor;
         static void Main(string[] args)
         {
-            DeckInteractor = new DeckInteractor();
-            List<Card> gameDeck = DeckInteractor.GenerateDeck();
-            gameDeck = DeckInteractor.Shuffle(gameDeck);
+            deckInteractor = new DeckInteractor();
+            List<Card> gameDeck = deckInteractor.GenerateDeck();
+            gameDeck = deckInteractor.Shuffle(gameDeck);
 
             GameOfWar gameState = new GameOfWar();
 
@@ -21,8 +21,8 @@ namespace GameOfWar
 
             while (PlayersStillHaveCards(gameState))
             {
-                gameState.P1CardInPlay = DeckInteractor.DrawTopCard(gameState.P1Hand);
-                gameState.P2CardInPlay = DeckInteractor.DrawTopCard(gameState.P2Hand);
+                gameState.P1CardInPlay = deckInteractor.DrawTopCard(gameState.P1Hand);
+                gameState.P2CardInPlay = deckInteractor.DrawTopCard(gameState.P2Hand);
                 gameState.WinnersPot = new List<Card>();
                 DisplayMatchup(gameState);
                 PlayRound(gameState);
@@ -82,12 +82,12 @@ namespace GameOfWar
 
                 while (!EitherPlayerOnlyHasOneCardLeft(game) && tieCounter < 3)
                 {
-                    game.WinnersPot.Add(DeckInteractor.DrawTopCard(game.P1Hand));
-                    game.WinnersPot.Add(DeckInteractor.DrawTopCard(game.P2Hand));
+                    game.WinnersPot.Add(deckInteractor.DrawTopCard(game.P1Hand));
+                    game.WinnersPot.Add(deckInteractor.DrawTopCard(game.P2Hand));
                     tieCounter++;
                 }
-                game.P1CardInPlay = DeckInteractor.DrawTopCard(game.P1Hand);
-                game.P2CardInPlay = DeckInteractor.DrawTopCard(game.P2Hand);
+                game.P1CardInPlay = deckInteractor.DrawTopCard(game.P1Hand);
+                game.P2CardInPlay = deckInteractor.DrawTopCard(game.P2Hand);
                 PlayRound(game);
             }
 
