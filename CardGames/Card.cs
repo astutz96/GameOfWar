@@ -14,6 +14,17 @@ namespace CardGames
         private Suit _suit;
         private int _rankValue;
 
+        public Card(Suit suit, int rankValue)
+        {
+            if (rankValue < 2 || rankValue > 14)
+            {
+                throw new ArgumentException("Invalid Rank Provided: " + rankValue.ToString());
+            };
+
+            this._suit = suit;
+            this._rankValue = rankValue;
+        }
+
         public int RankValue
         {
             get { return _rankValue; }
@@ -26,49 +37,41 @@ namespace CardGames
             set { _suit = value; }
         }
 
-        public string Rank
+        public override string ToString()
         {
-            get {return GetRank();}
-        }
-
-        public Card(Suit suit, int rankValue)
-        {
-            if (rankValue < 2 || rankValue > 14)
-            {
-                throw new ArgumentException("Invalid Rank Provided: " + rankValue.ToString());
-            };
-
-            this._suit = suit;
-            this._rankValue = rankValue;
-        }
-
-        public String Print()
-        {
-            return Rank + " of " + _suit.ToString();
+            return GetRank() + " of " + _suit.ToString();
         }
 
         public string GetRank()
         {
-            if (this.RankValue.Equals(11))
+            return RankValue switch
             {
-                return "Jack";
-            }
-            else if (this.RankValue.Equals(12))
-            {
-                return "Queen";
-            }
-            else if (this.RankValue.Equals(13))
-            {
-                return "King";
-            }
-            else if (this.RankValue.Equals(14))
-            {
-                return "Ace";
-            }
-            else
-            {
-                return this.RankValue.ToString();
-            }
+                11 => "Jack",
+                12 => "Queen",
+                13 => "King",
+                14 => "Ace",
+                _ => RankValue.ToString()
+            };
+            // if (this.RankValue.Equals(11))
+            // {
+            //     return "Jack";
+            // }
+            // else if (this.RankValue.Equals(12))
+            // {
+            //     return "Queen";
+            // }
+            // else if (this.RankValue.Equals(13))
+            // {
+            //     return "King";
+            // }
+            // else if (this.RankValue.Equals(14))
+            // {
+            //     return "Ace";
+            // }
+            // else
+            // {
+            //     return this.RankValue.ToString();
+            // }
         }
 
     }

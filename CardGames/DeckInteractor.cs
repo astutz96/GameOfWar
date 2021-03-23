@@ -27,7 +27,7 @@ namespace CardGames
             return topCard;
         }
 
-        public void Shuffle(List<Card> cards)
+        public List<Card> Shuffle(List<Card> cards)
         {
             //FisherYatesShuffle
             Random rng = new Random();
@@ -40,6 +40,7 @@ namespace CardGames
                 cards[x] = cards[n];
                 cards[n] = value;
             }
+            return cards;
         }
     }
 }
