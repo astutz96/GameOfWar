@@ -2,7 +2,6 @@
 
 namespace CardGames
 {
-
     public enum Suit
     {
         Clubs, Spades, Hearts, Diamonds
@@ -10,9 +9,8 @@ namespace CardGames
 
     public class Card
     {
-
-        private Suit _suit;
-        private int _rankValue;
+        public Suit Suit { get; set; }
+        public int RankValue { get; set; }
 
         public Card(Suit suit, int rankValue)
         {
@@ -21,25 +19,13 @@ namespace CardGames
                 throw new ArgumentException("Invalid Rank Provided: " + rankValue.ToString());
             };
 
-            this._suit = suit;
-            this._rankValue = rankValue;
-        }
-
-        public int RankValue
-        {
-            get { return _rankValue; }
-            set { _rankValue = value; }
-        }
-
-        public Suit Suit
-        {
-            get { return _suit; }
-            set { _suit = value; }
+            this.Suit = suit;
+            this.RankValue = rankValue;
         }
 
         public override string ToString()
         {
-            return GetRank() + " of " + _suit.ToString();
+            return GetRank() + " of " + Suit.ToString();
         }
 
         public string GetRank()
@@ -52,28 +38,6 @@ namespace CardGames
                 14 => "Ace",
                 _ => RankValue.ToString()
             };
-            // if (this.RankValue.Equals(11))
-            // {
-            //     return "Jack";
-            // }
-            // else if (this.RankValue.Equals(12))
-            // {
-            //     return "Queen";
-            // }
-            // else if (this.RankValue.Equals(13))
-            // {
-            //     return "King";
-            // }
-            // else if (this.RankValue.Equals(14))
-            // {
-            //     return "Ace";
-            // }
-            // else
-            // {
-            //     return this.RankValue.ToString();
-            // }
         }
-
     }
-
 }
